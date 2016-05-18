@@ -1,0 +1,132 @@
+*{
+	margin: 0;padding: 0;
+}	
+body {
+  height: auto;
+  padding-top: 100px;
+  background-color:#b5fae3;
+}
+a:hover{
+	text-decoration: none;
+}
+	#mybutton{
+		border-radius: 5px;
+		border: 0px;
+		font-size: 20px;
+		padding: 3px;
+		font-weight: bold;
+		width: 70px;
+		margin-left: -10px;
+	}
+	.imageroll{
+		float:left;
+		width:550px;
+		height:345px;
+		overflow:hidden;
+		position:relative;
+	}
+		.imageroll img{
+		width:100%;
+		height:auto;
+		}
+		#jnImageroll div{
+			overflow:hidden;
+			position:absolute;
+			bottom:0px;
+			float:left;
+		}
+		#jnImageroll div a{
+			background-color:#444444;
+			color:#ffffff;
+			display:inline-block;
+			float:left;
+			height:50px;
+			margin-right:1px;
+			overflow:hidden;
+			padding:5px;15px;
+			text-align:center;
+			width:109px;
+		}
+		#jnImageroll div a:hover{
+			text-decoration:none;
+		}
+		#jnImageroll div a em{
+			cursor:pointer;
+			display:block;
+			height:20px;
+			overflow:hidden;
+			width:109px;
+			font-size:15px;
+		}
+		#jnImageroll .last{
+			margin:0;
+			width:90px;
+		}
+		#jnImageroll a.chos{
+			background:;
+			color:#FFFFFF;
+		}
+	.campus_hot{
+		float:left;
+		width:531px;
+		height:315px;
+		margin-left:55px;
+	}
+		.campus_hot img{
+		width:100%;
+		height:auto;
+	}
+	.campus_hot ul{
+		margin-left:30px;
+		margin-top:10px;
+	}
+	.campus_hot li{
+		font:fantasy;
+		font-size:30px;
+	}
+	.hot_post1{
+		float: left;
+		margin-top:430px;
+		margin-left: -99%;
+		width:531px;
+		height:331px;
+		background-image:url(../img/hot_bg.png);
+	}
+	.hot_post1 img{
+		width:100%;
+		height:auto;
+		margin-top:-100px;
+	}
+	.hot_post1 ul{
+		margin-top: -35px;
+		margin-left: 30px;
+	}
+	.hot_post1 ol{
+		margin-left:50px;
+		margin-top:-33px;
+	}
+	.hot_post1 li,.hot_post2 li{
+		font:12px/1.5 Tahoma, Helvetica, Arial, 'Microsoft YaHei', sans-serif;
+		font-size:25px;
+		color:#0066FF;
+		margin-top:24px;
+	}
+	.hot_post2{
+		float:left;
+		width:500px;
+		margin-left:55px;
+		margin-top:115px;
+		height:331px;
+		background-image:url(../img/hot_bg.png);
+	}
+	.hot_post2 ol{
+		margin-left: 50px;
+	}
+#footer{
+	margin-top: 50px;
+	margin-bottom: 50px;
+	clear:both;
+	text-align:center;
+	font-size:14px;
+	color:#999999;
+}
