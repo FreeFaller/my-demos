@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"> 
+<link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css"/>
+<link rel="stylesheet" type="text/css" href="css/imgareaselect-animated.css"/>
+<script type="text/javascript" src="scripts/jquery.min.js"></script> 
+<script type="text/javascript" src="scripts/jquery.imgareaselect.pack.js"></script> 
+<script type="text/javascript"> 
+function preview(img, selection) { 
+	$('#selectbanner').data('x',selection.x1); 
+	$('#selectbanner').data('y',selection.y1); 
+	$('#selectbanner').data('w',selection.width); 
+	$('#selectbanner').data('h',selection.height); 
+	 
+	var scaleX = 100 / (selection.width || 1); 
+	var scaleY = 100 / (selection.height || 1); 
+	$('#ferret > img').css({ 
+	width: Math.round(scaleX * 346) + 'px',//346、348是你上传图片的宽高 
+	height: Math.round(scaleY * 348) + 'px', 
+	marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px', 
+	marginTop: '-' + Math.round(scaleY * selection.y1) + 'px' 
+	}); 
+} 
+ 
+//在原来图片后插入预览的小图片 
+$(document).ready(function () { 
+	$('<div id="ferret"><img src="Z.jpg" style="position: relative;" /><div>').css({ 
+		float:'left',
+		display:'inline-block',
+		position: 'relative', 
+		overflow: 'hidden', 
+		width: '100px', 
+		height: '100px' 
+	})	 
+	.insertAfter($('#selectbanner'));
+	 
+	$('#selectbanner').imgAreaSelect({ 
+		selectionColor: '#e3e8ee', x1:0, y1:0, x2: 100,//初始位置 
+		maxWidth:300,y2:100, 
+		aspectRatio: '1:1',//缩放比例 
+		selectionOpacity: 0.2 , 
+		onSelectEnd: preview //裁剪后执行的函数，在上面 
+	}); 
+}) 
+</script>
+<style type="text/css">
+	#imgCut{width: 346px;height: 348px;}
+	#imgCut #selectbanner{width: 100%;height: auto;}
+</style>
+<title>图片裁剪、预览</title> 
+</head> 
+<body> 
+<div id="imgCut"> 
+<!--显示图片--> 
+	<img id="selectbanner" name="selectbanner" src="Z.jpg" title="mypic"/> 
+</div> 
+</body> 
+</html>
