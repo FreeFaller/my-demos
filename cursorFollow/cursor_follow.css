@@ -3,3 +3,4 @@ body {background-color: #020202;margin: 0;padding: 0;}
 .main {perspective: 1000px;-webkit-perspective: 1000px;margin:atuo;width: 100%;}
 .picture {position: relative;-webkit-transform-style: preserve-3d;transform-style: preserve-3d;width: 270px;height: 320px;margin: auto;}
 .picture img{width: 100%;height: auto;}
+.font{color: #ffffff;font-size: 16px;font-weight: bold;transform:rotateY(60deg);}
