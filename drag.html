@@ -1,0 +1,161 @@
+<!Doctype html>
+<html>
+<head>
+<style type="text/css">
+.div1{width: 200px;height: 300px;border: 1px solid black;}
+.div1 ul{margin: 0;padding: 0;text-align: center;}
+.div1 li{background-color: yellow;margin-top: 15px;list-style-type: none;text-align: center;}
+.div2{width: 200px;height: 300px;border: 1px solid black;margin-top: 20px;}
+.div2 ul{}
+.div2 li{background-color: yellow;margin-top: 15px;list-style-type: none;text-align: center;}
+</style>
+</head>
+<body>
+<div class="div1" id="div1">
+<ul>
+<li draggable="true" id = "li1" ondragstart = "dragstart(event)">1</li>
+<li draggable="true" id = "li2" ondragstart = "dragstart(event)">2</li>
+<li draggable="true" id = "li3" ondragstart = "dragstart(event)">3</li>
+<li draggable="true" id = "li4" ondragstart = "dragstart(event)">4</li>
+</ul>
+</div>
+<div class="div2" droppable="true" id="div2">
+</div>
+
+<script type="text/javascript">
+
+var EventUtil={
+	
+   addHandler:function(element,type,handler){ //添加事件
+      if(element.addEventListener){ 
+         element.addEventListener(type,handler,false);  //使用DOM2级方法添加事件
+      }else if(element.attachEvent){                    //使用IE方法添加事件
+         element.attachEvent("on"+type,handler);
+      }else{
+         element["on"+type]=handler;          //使用DOM0级方法添加事件
+      }
+   },  
+
+   // removeHandler:function(element,type,handler){  //取消事件
+   //    if(element.removeEventListener){
+   //       element.removeEventListener(type,handler,false);
+   //    }else if(element.detachEvent){
+   //       element.detachEvent("on"+type,handler);
+   //    }else{
+   //       element["on"+type]=null;
+   //    }
+   // },
+
+   // getEvent:function(event){  //使用这个方法跨浏览器取得event对象
+   //    return event?event:window.event;
+   // },
+	
+   // getTarget:function(event){  //返回事件的实际目标
+   //    return event.target||event.srcElement;
+   // },
+	
+   preventDefault:function(event){   //阻止事件的默认行为
+      if(event.preventDefault){
+         event.preventDefault(); 
+      }else{
+         event.returnValue=false;
+      }
+   },
+
+//    stopPropagation:function(event){  //立即停止事件在DOM中的传播
+//                                      //避免触发注册在document.body上面的事件处理程序
+//       if(event.stopPropagation){
+//          event.stopPropagation();
+//       }else{
+//          event.cancelBubble=true;
+//       }
+//    },
+		
+//    getRelatedTarget:function(event){  //获取mouseover和mouseout相关元素
+//       if(event.relatedTarget){
+//          return event.relatedTarget;
+//       }else if(event.toElement){      //兼容IE8-
+//          return event.toElement;
+//       }else if(event.formElement){
+//          return event.formElement;
+//       }else{
+//          return null;
+//       }
+//    },
+		
+//    getButton:function(event){    //获取mousedown或mouseup按下或释放的按钮是鼠标中的哪一个
+//       if(document.implementation.hasFeature("MouseEvents","2.0")){
+//          return event.button;
+//       }else{
+//          switch(event.button){   //将IE模型下的button属性映射为DOM模型下的button属性
+//             case 0:
+//             case 1:
+//             case 3:
+//             case 5:
+//             case 7:
+//                return 0;  //按下的是鼠标主按钮（一般是左键）
+//             case 2:
+//             case 6:
+//                return 2;  //按下的是中间的鼠标按钮
+//             case 4:
+//                return 1;  //鼠标次按钮（一般是右键）
+//          }
+//       }
+//    },
+		
+//    getWheelDelta:function(event){ //获取表示鼠标滚轮滚动方向的数值
+//       if(event.wheelDelta){
+//          return event.wheelDelta;
+//       }else{
+//          return -event.detail*40;
+//       }
+//    },
+		
+//    getCharCode:function(event){   //以跨浏览器取得相同的字符编码，需在keypress事件中使用
+//       if(typeof event.charCode=="number"){
+//          return event.charCode;
+//       }else{
+//          return event.keyCode;
+//       }
+//    }
+		
+};
+
+dragstart = function(event){
+	event.dataTransfer.setData("Text",event.target.id);
+}
+
+var droptarget = document.getElementById('div2');
+EventUtil.addHandler(droptarget,"dragover",function (event) {
+	EventUtil.preventDefault(event);
+});
+EventUtil.addHandler(droptarget,"dragenter",function (event){
+	EventUtil.preventDefault(event);
+});
+EventUtil.addHandler(droptarget,"drop",function (event){
+	EventUtil.preventDefault(event);
+   if (event.target.draggable==true) {
+      return;
+   };
+	var data = event.dataTransfer.getData("Text");
+	event.target.appendChild(document.getElementById(data));
+});
+
+var droptarget2 = document.getElementById('div1');
+EventUtil.addHandler(droptarget2,"dragover",function (event) {
+   EventUtil.preventDefault(event);
+});
+EventUtil.addHandler(droptarget2,"dragenter",function (event){
+   EventUtil.preventDefault(event);
+});
+EventUtil.addHandler(droptarget2,"drop",function (event){
+   EventUtil.preventDefault(event);
+   if (event.target.draggable==true) {
+      return;
+   };
+   var data = event.dataTransfer.getData("Text");
+   event.target.appendChild(document.getElementById(data));
+});
+</script>
+</body>
+</html>
