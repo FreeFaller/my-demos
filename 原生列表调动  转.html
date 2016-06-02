@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">  
+<HTML>  
+<HEAD>  
+<TITLE> Select Demo </TITLE>  
+<META NAME="Generator" CONTENT="EditPlus">  
+<META NAME="Author" CONTENT="">  
+<META NAME="Keywords" CONTENT="">  
+<META NAME="Description" CONTENT=""> 
+<META charset="utf-8"> 
+</HEAD>  
+<style>  
+    center  
+    {  
+        font-size:12px;  
+        color:red;  
+        font-weight:bold;  
+    }  
+    select  
+    {  
+        font-size:12px;  
+        color:green;  
+    }  
+</style>  
+  
+<BODY>  
+    <span id='feedback'></span>  
+      
+    <form method="post" name="myform">  
+  <table border="0" width="400">  
+ <tr>  
+  <td><CENTER>可选择排序方式</CENTER></td>  
+  <td> </td>  
+  <td><CENTER>已选择排序方式</CENTER></td>  
+ </tr>  
+    <tr>  
+      <td width="40%">  
+  <select  multiple name="left" id="left" size="8" style='width:200;'  
+  ondblclick="moveOption(document.getElementById('left'), document.getElementById('right'))">  
+       <option value="20">测试数据一</option>  
+       <option value="30">测试数据二</option>  
+       <option value="40">测试数据三</option>  
+       <option value="50">测试数据四</option>  
+       <option value="60">测试数据五</option>  
+       <option value="70">测试数据六</option>    
+       <option value="80">测试数据七</option>  
+       <option value="90">测试数据八</option>    
+  </select>  
+   </td>  
+      <td width="20%" align="center">  
+  <input type="button" value=" >> " onclick="moveOption(document.getElementById('left'),document.getElementById('right'))"><br><br>  
+  <input type="button" value=" << " onclick="moveOption(document.getElementById('right'), document.getElementById('left'))">  
+   </td>  
+      <td width="40%">  
+  <select  multiple name="right" id="right" size="8" style='width:200;'  
+  ondblclick="moveOption(document.getElementById('right'), document.getElementById('left'))">  
+  </select>  
+   </td>  
+    </tr>  
+ <tr>  
+  <td colspan="3">  
+  <CENTER>  
+  <INPUT TYPE="button" value="置顶" onclick="moveTop(document.getElementById('right'));">  
+  <INPUT TYPE="button" value="上移" onclick="moveUp(document.getElementById('right'));">  
+  <INPUT TYPE="button" value="下移" onclick="moveDown(document.getElementById('right'));">  
+  <INPUT TYPE="button" value="置底" onclick="moveBottom(document.getElementById('right'));">  
+  </CENTER></td>  
+ </tr>  
+  </table>  
+      
+   
+</BODY>  
+</HTML>  
+  
+  
+<SCRIPT LANGUAGE="JavaScript">  
+<!--  
+    //上移  
+　   function moveUp(obj)  
+　　{　  
+　　　　　　for(var i=1; i < obj.length; i++)  
+　　　　　　{//最上面的一个不需要移动，所以直接从i=1开始  
+　　　　　　　　if(obj.options[i].selected)  
+　　　　　　　　{  
+　　　　　　　　　　if(!obj.options.item(i-1).selected)  
+　　　　　　　　　　{  
+　　　　　　　　　　　　var selText = obj.options[i].text;  
+　　　　　　　　　　　　var selValue = obj.options[i].value;  
+                        obj.options[i].text = obj.options[i-1].text;  
+                        obj.options[i].value = obj.options[i-1].value;  
+                        obj.options[i].selected = false;  
+                        obj.options[i-1].text = selText;  
+                        obj.options[i-1].value = selValue;  
+                        obj.options[i-1].selected=true;  
+　　　　　　　　　　}  
+　　　　　　　　}  
+　　　　　　}  
+　　　　}  
+  
+        //下移  
+        function moveDown(obj)  
+　　　　{  
+　　　　　　for(var i = obj.length -2 ; i >= 0; i--)  
+　　　　　　{//向下移动，最后一个不需要处理，所以直接从倒数第二个开始  
+　　　　　　　　if(obj.options[i].selected)  
+　　　　　　　　{  
+　　　　　　　　　　if(!obj.options[i+1].selected)  
+　　　　　　　　　　{  
+　　　　　　　　　　　　var selText = obj.options[i].text;  
+　　　　　　　　　　　　var selValue = obj.options[i].value;  
+			            obj.options[i].text = obj.options[i+1].text;  
+			            obj.options[i].value = obj.options[i+1].value;  
+			            obj.options[i].selected = false;  
+			            obj.options[i+1].text = selText;  
+			            obj.options[i+1].value = selValue;  
+			            obj.options[i+1].selected=true;  
+　　　　　　　　　　}  
+　　　　　　　　}  
+　　　　　　}  
+　　　　}  
+        //移动  
+        function moveOption(obj1, obj2)  
+        {  
+             for(var i = obj1.options.length - 1 ; i >= 0 ; i--)  
+             {  
+                 if(obj1.options[i].selected)  
+                 {  
+                    var opt = new Option(obj1.options[i].text,obj1.options[i].value);  
+                    opt.selected = true;  
+                    obj2.options.add(opt);  
+                    obj1.remove(i);  
+                }  
+             }  
+        }  
+        //置顶  
+        function  moveTop(obj)   
+        {   
+            var  opts = [];   
+            for(var i =obj.options.length -1 ; i >= 0; i--)  
+            {  
+                if(obj.options[i].selected)  
+                {  
+                    opts.push(obj.options[i]);  
+                    obj.remove(i);  
+                }  
+            }  
+            var index = 0 ;  
+            for(var t = opts.length-1 ; t>=0 ; t--)  
+            {  
+                var opt = new Option(opts[t].text,opts[t].value);  
+                opt.selected = true;  
+                obj.options.add(opt, index++);  
+            }  
+        }   
+      //置底  
+      function  moveBottom(obj)   
+      {   
+            var  opts = [];   
+            for(var i =obj.options.length -1 ; i >= 0; i--)  
+            {  
+                if(obj.options[i].selected)  
+                {  
+                    opts.push(obj.options[i]);  
+                    obj.remove(i);  
+                }  
+            }  
+             for(var t = opts.length-1 ; t>=0 ; t--)  
+            {  
+                var opt = new Option(opts[t].text,opts[t].value);  
+                opt.selected = true;  
+                obj.options.add(opt);  
+            }  
+        }   
+  
+    //-->  
+</SCRIPT>  
