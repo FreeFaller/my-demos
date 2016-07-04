@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="ui-bootstrap-tpls-1.3.3.min.js"></script>
+<style type="text/css">
+
+li{list-style-type: none;}
+.ok{width: 200px;height: 200px;background-color: red;margin-right: 20px;float: left;}
+.focus{height: 200px;background-color: blue;margin-right: 20px;float: left;transform:rotate(10deg);transition:1.5s;transition-timing-function:ease;}
+.change{background-color: blue;}
+.abc{}
+</style>
+</head>
+<body ng-app="myApp">
+
+<ul  ng-controller="personCtrl" ng-init = "focus = 1">
+  <li ng-class="{focus:1 == focus}" class="ok" ng-click="change($event)" value="1"></li>
+  <li ng-class="{focus:2 == focus}" class="ok" ng-click="change($event)" value="2"></li>
+  <li ng-class="{focus:3 == focus}" class="ok" ng-click="change($event)" value="3"></li>
+</ul>
+
+
+<!-- <div ng-controller="todoCtrl">
+<h2>我的备忘录</h2>
+<form ng-submit="todoAdd()">
+    <input type="text" ng-model="todoInput" size="50" placeholder="新增">
+    <input type="submit" value="新增">
+</form>
+<br>
+<div ng-repeat="x in todoList">
+    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+</div>
+<p><button ng-click="remove()">删除记录</button></p>
+</div>
+
+<div class="abc" ng-controller="myCtrl">
+    <input class="" type="button" value="弹层" ng-click=""/>
+</div> -->
+
+<script>
+var app = angular.module('myApp', []); 
+app.controller('todoCtrl', function($scope) {
+    $scope.todoList = [{todoText:'Clean House', done:false}];
+
+    // $scope.todoAdd = function() {
+    //     $scope.todoList.push({todoText:$scope.todoInput, done:false});
+    //     $scope.todoInput = "";
+    // };
+
+    // $scope.remove = function() {
+    //     var oldList = $scope.todoList;
+    //     $scope.todoList = [];
+    //     angular.forEach(oldList, function(x) {
+    //         if (!x.done) $scope.todoList.push(x);
+    //     });
+    // };
+});
+</script>
+
+
+<script type="text/javascript">
+// app.controller('myCtrl', function ($scope, $uibModal) {
+//     $uibModal.open({
+//         templateUrl: 'myWindow.html',
+//         scope: $scope
+//     });
+// });
+</script>
+
+
+<script type="text/javascript">
+app.controller('personCtrl',function ($scope) {
+	$scope.change = function($event){
+		$scope.focus = $event.target.value;
+	};
+})
+</script>
+</body>
+</html>
