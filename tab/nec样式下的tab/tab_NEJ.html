@@ -1,0 +1,64 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset = "utf-8"/>
+<style type="text/css">
+	ul li{list-style-type: none;}
+	.m-tab{height:33px;margin:0 0 10px;border-bottom:1px solid #DDD;}
+	.m-tab ul{position:relative;margin-bottom:-1px;}
+	.m-tab li{position:relative;float:left;margin-right:4px;}
+	.m-tab li a{display:block;height:32px;line-height:32px;padding:0 14px;border:1px solid #BBB;border-width:1px 1px 0;background:#fbfbfb;text-decoration: none;color: #7D7D7D;}
+	.m-tab li.z-act a,.m-tab li.z-act a:hover{padding-bottom:1px;color:#1482CF;}
+	.m-tab li.z-act a:after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#1482CF;}
+	.textarea{width:310px;height:200px;resize:none;margin-left: 39px;}
+</style>
+<head>
+<body>
+	<ul id="my-tab" class="m-tab">
+	    <li class="tab-head z-act" id="html"><a href="javascript:;">html</a></li>
+	    <li class="tab-head" id="css"><a href="javascript:;">css</a></li>
+	    <li class="tab-head" id="JavaScript"><a href="javascript:;">JavaScript</a></li>
+	    <li class="tab-head" id="frames"><a href="javascript:;">frames</a></li>
+	</ul>
+	<div>
+		<textarea id="text" class="textarea">html</textarea>
+	</div>
+</body>
+<script type="text/javascript">
+	(function (){
+			var myTab = document.getElementById('my-tab');
+			myTab.addEventListener("click",function(event) {
+				doTab(event);
+			})
+		})();
+	function doTab (event) {
+		var _tab = event.target.parentNode,
+		    _tabList = document.getElementsByClassName('tab-head'),
+		    _text = document.getElementById('text');
+		if (event.target.id != "my-tab") {
+			for (var i = 0; i < _tabList.length; i++) {
+				//正则删除选中样式
+				// _tabList[i].className = _tabList[i].className.replace
+			 //      ( /(?:^|\s)z-act(?!\S)/g , '' )
+			 //html5原生支持移除样式
+			    _tabList[i].classList.remove("z-act");
+			};
+			_tab.className += " z-act";
+			switch(_tab.id){
+				case "html":
+					_text.innerHTML = "html";
+				break;
+				case "css":
+					_text.innerHTML = "css";
+				break;
+				case "JavaScript":
+					_text.innerHTML = "JavaScript";
+				break;
+				case "frames":
+					_text.innerHTML = "frames";
+				break;
+			}
+		};
+	}
+</script>
+</html>
