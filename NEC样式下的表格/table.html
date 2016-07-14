@@ -1,0 +1,157 @@
+<!Doctype>
+<html>
+<head>
+<meta charset = "utf-8"/>
+<style type="text/css">
+table{margin-bottom: 50px;}
+/* 表格 */
+.m-table{width:100%;margin:0 0 10px;line-height:18px;background:#fff;font-size:12px;}
+.m-table th,.m-table td{padding:7px 9px;border:1px solid #ebebeb;width:20em;white-space:nowrap;overflow:hidden;}
+.m-table th{/*position:relative;*/border:1px solid #ebebeb;background-color:#f5f5f5;color:#888;white-space:nowrap;cursor:pointer;height:18px;}
+.m-table th:last-child{border-right:1px solid #ebebeb;}
+.m-table .sorted{position:absolute;top:12px;right:16px;width:0;height:0;}
+.m-table .up .sorted{border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:6px solid #999;}
+.m-table .down .sorted{border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid #999;}
+.m-table th.checkbox{width:3%;}
+.m-table td{max-width:200px;text-overflow:ellipsis;text-align: center;}
+.m-table-hide{display: none;}
+.m-my-table{float: left;min-width: 600px;}
+
+.m-table thead{background:#e5e5e5;}
+.m-table tbody tr:hover{background-color:#deecf0;}
+.m-table tbody tr:nth-child(even){background-color:#f8f8f0;}
+.m-table tbody tr:nth-child(even):hover{background-color:#deecf0;}
+.m-table input[type=checkbox],.m-table input[type=radio]{vertical-align:middle;}
+.m-table a{color:#0095d9;}
+.m-table-s1{width:600px;}
+/* .m-table-1 tbody td{text-overflow:clip} */
+.m-table .f-dat{text-overflow:clip;padding-bottom:0;}
+.m-table .f-dat div:hover{overflow-x:auto;}
+.m-table .txt{height:20px;line-height:20px;}
+/* .m-table-1是对第一列是checkbox的表格的扩展 */
+.m-table-1 .descp:hover .u-icon-edit{visibility: visible;float: right;}
+.m-table-1 .descp input{border:1px solid #DA7878;height: 100%;width:100%;}
+.m-table-1 thead th:first-child{width:3%;}
+/*.m-table-1 thead tr th:first-child,.m-table-1 tbody tr td:first-child{text-align:center;}*/
+.m-table-1 thead .icn{width:5%;}
+.m-table-1 thead .cnt{width:40%;}
+.m-table-1 td{text-align: center;}
+.m-table-2 thead tr th:first-child,.m-table-2 tbody tr td:first-child{text-align:center;}
+.m-table-2 thead .checkbox{width:3%;}
+.m-table-3 tr th,.m-table-3 tr td{text-align:center;}
+.m-table-3 tbody:hover td[rowspan],.m-table-3 tr:hover td{background-color:#deecf0;}
+.m-table-3 .dtl .f-cf{color:#fff;}
+
+.m-table .min-cell{width: 20px;}
+</style>
+</head>
+<body>
+<table class="m-table">
+	<thead>
+		<th>三国演义</th>
+		<th>西游记</th>
+		<th>水浒传</th>
+		<th>红楼梦</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>刘备</td>
+			<td>孙悟空</td>
+			<td>宋江</td>
+			<td>贾宝玉</td>
+		</tr>
+		<tr>
+			<td>关羽</td>
+			<td>猪八戒</td>
+			<td>张飞</td>
+			<td>林黛玉</td>
+		</tr>
+		<tr>
+			<td>武松</td>
+			<td>沙悟净</td>
+			<td>林冲</td>
+			<td>王熙凤</td>
+		</tr>
+	</tbody>
+</table>
+<table class="m-table-1">
+	<thead>
+		<th><input type="checkbox" id="j-sel" class="j-sel"/></th>
+		<th>三国演义</th>
+		<th>西游记</th>
+		<th>水浒传</th>
+		<th>红楼梦</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td><input type="checkbox" class="j-sel"/></td>
+			<td>刘备</td>
+			<td>孙悟空</td>
+			<td>宋江</td>
+			<td>贾宝玉</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" class="j-sel"/></td>
+			<td>关羽</td>
+			<td>猪八戒</td>
+			<td>张飞</td>
+			<td>林黛玉</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" class="j-sel"/></td>
+			<td>武松</td>
+			<td>沙悟净</td>
+			<td>林冲</td>
+			<td>王熙凤</td>
+		</tr>
+	</tbody>
+</table>
+<table class="m-table-3">
+	<thead>
+		<th>三国演义</th>
+		<th>西游记</th>
+		<th>水浒传</th>
+		<th>红楼梦</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>刘备</td>
+			<td>孙悟空</td>
+			<td>宋江</td>
+			<td>贾宝玉</td>
+		</tr>
+		<tr>
+			<td>关羽</td>
+			<td>猪八戒</td>
+			<td>张飞</td>
+			<td>林黛玉</td>
+		</tr>
+		<tr>
+			<td>武松</td>
+			<td>沙悟净</td>
+			<td>林冲</td>
+			<td>王熙凤</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+<script type="text/javascript">
+//全选按钮
+var addSelectAllEvent = function(_id,_className){
+	var _handle = document.getElementById(_id),
+		_list = document.getElementsByClassName(_className);
+	_handle.addEventListener('click',function(){
+		if (_handle.checked) {
+			for (var i = 0; i < _list.length; i++) {
+				_list[i].checked = true;
+				}
+		}else{
+			for (var i = 0; i < _list.length; i++) {
+			_list[i].checked = false;
+			};
+		};
+	},false)
+}
+this.addSelectAllEvent("j-sel","j-sel");
+</script>
+</html>
