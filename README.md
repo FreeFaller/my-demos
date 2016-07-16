@@ -20,3 +20,5 @@ drag 原生拖放 http://codepen.io/anon/pen/jrEXQE
 Tab内含NEJ样式原生写法 和 angular下的两种Tab http://codepen.io/anon/pen/LkLbNZ
 
 水波进度 转自 清水河畔的肥嘟嘟左卫门  http://codepen.io/anon/pen/BzkpKz
+
+NEC样式下的table，内含原生全选按钮
