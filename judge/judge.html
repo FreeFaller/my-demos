@@ -1,0 +1,54 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset = "utf-8">
+<style type="text/css">
+*{margin: 0;padding: 0;}
+.judge{margin-top: 10px;margin-left: 50px;}
+.judge ul{float: left;}
+.judge .skill-judge{margin-top: 17px;}
+.judge .serve-judge{margin-top: 50px;}
+.judge .judgeContent{margin-top: 88px;}
+.judge .skill{float: left;}
+.judge .serve{float: left;clear: left;}
+.judge .judgeContent{clear: left;}
+.judge .judgeContent textarea{margin: -15px 0 0 50px;resize:none;width: 300px;height: 150px;padding: 5px;}
+
+.judge li{list-style-type: none;display: inline-block;}
+.u-icon{background:url(img/star.png) no-repeat 9999px 9999px;display:inline-block;width:16px;height:16px;vertical-align:middle;}
+.u-icon-star{background-position: -1px -1px;}
+.u-icon-eStar{background-position: -25px -1px;}
+</style>
+</head>
+<body>
+<div class="judge">
+	<p id = "anncDiv" class="anncDiv">请在此添加您对我们的评价~</p>
+	<div class="skill-judge">
+		<span class="skill">技术：</span>
+		<ul class="star" id="skill-score">
+            <li><i class="u-icon u-icon-star" data-num="1"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="2"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="3"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="4"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="5"></i></li>
+    	</ul>
+    </div>
+	<div class="serve-judge">
+		<span class="serve">服务：</span>
+		<ul class="star" id="serve-judge">
+            <li><i class="u-icon u-icon-star" data-num="1"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="2"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="3"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="4"></i></li>
+            <li><i class="u-icon u-icon-star" data-num="5"></i></li>
+    	</ul>
+	</div>
+	<div class="judgeContent">
+		<p class="judgement">评价：</p>
+		<textarea class="judge-content" id="judgeContent"></textarea>
+	</div>
+	<input type="button" id="submit" value="提交"/>
+</div>
+<script type="text/javascript" src= "judge.js"></script>
+</body>
+</html>
