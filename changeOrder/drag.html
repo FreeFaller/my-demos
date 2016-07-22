@@ -64,7 +64,7 @@ function onDragOver(e) {
     // 排除source和target相同的情况
     if(source === target)
        return;
-
+    //若此处var改为let则低版本谷歌等浏览器不支持
     var sourceParent = source.parentElement;
     var targetParent = target.parentElement;
     var sourceIndex = getElementIndex(source);
