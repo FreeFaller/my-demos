@@ -22,3 +22,5 @@ Tab内含NEJ样式原生写法 和 angular下的两种Tab http://codepen.io/anon
 水波进度 转自 清水河畔的肥嘟嘟左卫门  http://codepen.io/anon/pen/BzkpKz
 
 NEC样式下的table，内含原生全选按钮
+
+judge 用星星打分评价 http://codepen.io/anon/pen/XKEVWj
