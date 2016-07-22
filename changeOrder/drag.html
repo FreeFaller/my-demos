@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {font: 14px/1.6 "Microsoft YaHei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;}
+.m-listView {float: left; list-style: none; width: 200px;}
+.m-listView > li {background: #f4f4f4; border: 1px solid #ddd; border-radius: 2px; margin: 5px; padding: 0 20px; color: #666; font-size: 14px; line-height: 28px;}
+.m-listView > li.z-dragSource {background: transparent; font-size: 0; border: 1px dashed #ddd;}
+.m-gridView {float: right; list-style: none; overflow: auto; margin: 0; padding: 0; width: 400px;}
+.m-gridView li {float: left;}
+.m-gridView li {box-sizing: border-box; cursor: default; width: 80px; height: 80px; margin: 8px; border: 1px solid #ddd; border-radius: 4px; line-height: 40px; text-align: center; background: #f4f4f4;}
+.m-gridView li.z-dragSource {border: 2px dashed #00c0ef; background: transparent; font-size: 0;}
+</style>
+</head>
+<body>
+<ul class="m-listView" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" ondragover="onDragOver(event)">
+    <li draggable="true">选项A1</li>
+    <li draggable="true">选项A2</li>
+    <li draggable="true">选项A3</li>
+    <li draggable="true">选项A4</li>
+    <li draggable="true">选项A5</li>
+</ul>
+<ul class="m-listView" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" ondragover="onDragOver(event)">
+    <li draggable="true">选项B1</li>
+    <li draggable="true">选项B2</li>
+    <li draggable="true">选项B3</li>
+    <li draggable="true">选项B4</li>
+    <li draggable="true">选项B5</li>
+</ul>
+<ul class="m-gridView" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" ondragover="onDragOver(event)">
+    <li draggable="true">选项C1</li>
+    <li draggable="true">选项C2</li>
+    <li draggable="true">选项C3</li>
+    <li draggable="true">选项C4</li>
+    <li draggable="true">选项C5</li>
+    <li draggable="true">选项C6</li>
+    <li draggable="true">选项C7</li>
+    <li draggable="true">选项C8</li>
+    <li draggable="true">选项C9</li>
+    <li draggable="true">选项C10</li>
+</ul>
+<script>
+var manager = {};
+var getElementIndex = (element) => Array.prototype.indexOf.call(element.parentElement.children, element);
+
+function onDragStart(e) {
+    manager.source = e.target;
+    e.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => e.target.className = 'z-dragSource', 0);
+}
+function onDragEnd(e) {
+    e.target.className = '';
+}
+function onDragOver(e) {
+    e.preventDefault();
+
+    var source = manager.source;
+    var target = e.target;
+
+    if(target.tagName !== 'LI')
+        return;
+
+    // 排除source和target相同的情况
+    if(source === target)
+       return;
+
+    var sourceParent = source.parentElement;
+    var targetParent = target.parentElement;
+    var sourceIndex = getElementIndex(source);
+    var targetIndex = getElementIndex(target);
+
+    // 删除起始元素
+    sourceParent.removeChild(source);
+
+    // 再将起始元素插入到新的位置
+    if(sourceIndex >= targetIndex || sourceParent !== targetParent)
+       targetParent.insertBefore(source, target);
+    else
+       targetParent.insertBefore(source, target.nextElementSibling);
+}
+</script>
+</body>
+</html>

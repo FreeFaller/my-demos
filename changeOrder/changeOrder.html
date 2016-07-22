@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        #show{color:Red;}
+        #list{ cursor:move;width:300px;}
+        #list li{ border:solid 1px yellow; float:left; list-style-type:none; margin-top:10px;}
+        #list li img{width: 140px;height: 100px;}
+    </style>
+</head>    
+<body>
+    <div id="page-wrap">
+        <div id="content-wrap">     
+            <div id="content-left" class="demo">
+                <span id="show"></span>
+                <div>
+                    <input type="hidden" id="orderlist" />
+                    <ul id="list">
+                        
+                            <li id="13" title="1"><img alt="jQuery对元素拖动排序" src="http://www.jquery001.com/images/2010/logo3w.png" /></li>
+                        
+                            <li id="14" title="2"><img alt="jQuery对元素拖动排序" src="http://www.jquery001.com/images/2010/baidu_logo.gif" /></li>
+                        
+                            <li id="15" title="3"><img alt="jQuery对元素拖动排序" src="http://www.bairdtv.com/images/logos/Pepsi80s.png" /></li>
+                            <li id="16" title="4"><img alt="jQuery对元素拖动排序" src="http://www.bairdtv.com/images/logos/Pepsi80s.png" /></li>
+                            <li id="17" title="5"><img alt="jQuery对元素拖动排序" src="http://www.jquery001.com/images/2010/logo1.png" /></li>
+                            <li id="18" title="6"><img alt="jQuery对元素拖动排序" src="http://www.jquery001.com/images/2010/logo1.png" /></li>
+                                
+                    </ul>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.2/jquery-ui.min.js"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //保存常用选择器
+            var list = jQuery("#list"); //ul
+            var show = jQuery("#show"); //输出提示
+            var orderlist = jQuery("#orderlist");   //原顺序
+            var check = jQuery("#check");   //是否更新到数据库
+
+            //保存原来的排列顺序
+            var order = [];
+            list.children("li").each(function () {
+                order.push(this.title); //原排列顺序保存在title，得到后更改title
+                jQuery(this).attr("title", "你可以拖动进行排序");
+            });
+            orderlist.val(order.join(','));
+
+            //执行排列操作
+            list.sortable({
+                opacity: 0.7,
+                update: function () {
+                    Submit(check.attr("checked"));
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F188334bb1c28ed46d0d4d8c306c766b3' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</body>
+</html>
+
+
+<script type="text/javascript">
+//保存原来的排列顺序 
+var order = []; 
+list.children("li").each(function() { 
+    order.push(this.title); //原排列顺序保存在title，得到后更改title 
+    jQuery(this).attr("title", "你可以拖动进行排序"); 
+}); 
+orderlist.val(order.join(','));
+</script>
+</body>
+</html>
