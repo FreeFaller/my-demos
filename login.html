@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+		body, button, input, legend{margin: 0;padding: 0;font: 16px "微软雅黑";}
+		.m-form{margin: 150px auto;width: 325px;border: 1px solid #ddd;}
+		.m-form legend{width: 100%;line-height: 30px;text-indent: 1em;color: #fff;background-color: #2d2d2d;}
+		.m-form fieldset{border: none;padding: 20px;}
+		.m-form div{margin: 20px;}
+		.m-form button{width: 100%;height: 30px;color: #fff;border: 1px solid #ddd;cursor: pointer;background-color: #2d7dca;}
+		.m-form .msg{margin:5px;text-align:center;display:none;}
+		.m-form .tip{padding-left:6em;font-size:12px;color:#C0C0C0;}
+		.m-form .j-err{display:block;color:#FF0000;}
+		.m-form .j-suc{display:block;color:#158226;}
+		.m-form .u-txt{width: 160px;padding: 3px;border:1px solid #aaa;}
+		.m-form .j-error{border-color: #f00;background-color: #FFE7E7;}
+		.m-form .j-disabled{cursor: default;background-color: #ddd;}
+	</style>
+</head>
+<body>
+	<form action="./login" class="m-form" name="loginForm" target="result" autocomplete="off">
+	  <legend>手机号码登录</legend>
+	  <fieldset>
+	    <div class="msg" id="message"></div>
+		<div>
+		  <label for="telephone">手机号：</label>
+		  <input id="telephone" name="telephone" type="tel" class="u-txt" maxlength="11" 
+		         required pattern="^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$"><br/>
+		  <span class="tip">11位数字手机号码</span>
+		</div>
+		<div>
+		  <label for="password">密　码：</label>
+		  <input id="password" name="password" type="password" class="u-txt"><br/>
+		  <span class="tip">至少6位，同时包含数字和字母</span>
+		</div>
+		<div><button name="loginBtn">登　录</button></div>
+	  </fieldset>
+	</form>
+	<iframe name="result" id="result" style="display:none;"></iframe>
+	<script>
+        (function(){
+            var form = document.forms.loginForm,
+                nmsg = document.getElementById('message');
+            
+            function md5(msg){
+            	return msg;
+            }
+        
+            function showMessage(clazz,msg){
+            	if (!clazz){
+        	    	nmsg.innerHTML = '';
+        	    	nmsg.classList.remove('j-suc');
+        	    	nmsg.classList.remove('j-err');
+            	}else{
+        	    	nmsg.innerHTML = msg;
+        	    	nmsg.classList.add(clazz);
+            	}
+            }
+        
+            function disableSubmit(disabled){
+            	form.loginBtn.disabled = !!disabled;
+            	var method = !disabled?'remove':'add';
+                form.loginBtn.classList[method]('j-disabled');
+            }
+        
+            function invalidInput(node,msg){
+            	showMessage('j-err',msg);
+            	node.classList.add('j-error');
+            	node.focus();
+            }
+        
+            function clearInvalid(node){
+            	showMessage();
+            	node.classList.remove('j-error');
+            }
+        
+            form.telephone.addEventListener(
+            	'invalid',function(event){
+            		event.preventDefault();
+            		var input = form.telephone;
+        			invalidInput(input,'请输入正确的手机号码');
+            	}
+            );
+        
+            form.addEventListener(
+                'input',function(event){
+                	// 还原错误状态
+                	clearInvalid(event.target);
+                    // 还原登录按钮状态
+                    disableSubmit(false);
+                }
+            );
+        
+            form.addEventListener(
+                'submit',function(event){
+                    // 密码验证
+                    var input = form.password,
+                        pswd = input.value,
+                        emsg = '';
+                    if (pswd.length<6){
+                    	emsg = '密码长度必须大于6位';
+                    }else if(!/\d/.test(pswd)||!/[a-z]/i.test(pswd)){
+                    	emsg = '密码必须包含数字和字母';
+                    }
+                    // 密码验证不通过
+                    if (!!emsg){
+                    	event.preventDefault();
+                    	invalidInput(input,emsg);
+            			return;
+                    }
+                    input.value = md5(pswd);
+                    // 禁用提交按钮
+                    disableSubmit(true);
+                }
+            );
+            
+            var frame = document.getElementById('result');
+            frame.addEventListener(
+            	'load',function(event){
+            		try{
+            			var result = JSON.parse(
+        					frame.contentWindow.document.body.textContent
+            			);
+            			// 还原登录按钮状态
+            			disableSubmit(false);
+                    	// 识别登录结果
+            			if (result.code===200){
+            				showMessage('j-suc','登录成功！');
+            				form.reset();
+            			}
+            		}catch(ex){
+            			// ignore
+            		}
+            	}
+            );
+            
+        })();
+	</script>
+</body>
+</html>
