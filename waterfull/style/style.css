@@ -1,0 +1,12 @@
+*{ margin:0; padding:0 }
+body, button, input, select, textarea{ font:12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif }
+
+.warp{width:968px; margin:0 auto; overflow:hidden;}
+.full{float:left; display:inline; margin-right:15px; margin-top:20px; width:228px;}
+.water{ width:200px;height:auto;padding:13px;border:solid 4px white; overflow:hidden;margin-bottom:20px;box-shadow:2px 2px 5px #ccc;}
+.water:hover{border:solid 4px red;}
+.water img{width: 200px;}
+.water a{ border:none;}
+.water a img{ border:none;}
+.title{ color:#878787;}
+.last{margin-right:0;}
