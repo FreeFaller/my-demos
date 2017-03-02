@@ -18,8 +18,8 @@
                 <thead>
                     <tr>
                         <th>用户名</th>
-                        <th>年龄</th>
-                        <th>毕业学校</th>
+                        <th>编号</th>
+                        <th>公司</th>
                         <th>备注</th>
                     </tr>
                 </thead>
@@ -27,7 +27,7 @@
                     <template v-for="(index, row) in rows ">
                         <tr v-if="(index>=(curpage-1)*pagesize)&&(index<curpage*pagesize)">
                             <td>{{row.Name}}</td>
-                            <td>{{row.Age}}</td>
+                            <td>{{row.Id}}</td>
                             <td>{{row.School}}</td>
                             <td>{{row.Remark}}</td>
                         </tr>
@@ -49,32 +49,31 @@
         </nav>
     </div>
 </body>
-<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/vue.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     //Model
         var data = {
             rows: [
-            { Id: 1, Name: '李先生', Age: 18, School: '光明小学', Remark: '三好学生' },
-            { Id: 2, Name: '小刚', Age: 20, School: '复兴中学', Remark: '优秀班干部' },
-            { Id: 3, Name: '吉姆格林', Age: 19, School: '光明小学', Remark: '吉姆做了汽车公司经理' },
-            { Id: 4, Name: '李雷', Age: 25, School: '复兴中学', Remark: '不老实的家伙' },
-            { Id: 5, Name: '韩梅梅', Age: 22, School: '光明小学', Remark: '在一起' },
-            { Id: 1, Name: '李先生', Age: 18, School: '光明小学', Remark: '三好学生' },
-            { Id: 2, Name: '小刚', Age: 20, School: '复兴中学', Remark: '优秀班干部' },
-            { Id: 3, Name: '吉姆格林', Age: 19, School: '光明小学', Remark: '吉姆做了汽车公司经理' },
-            { Id: 4, Name: '李雷', Age: 25, School: '复兴中学', Remark: '不老实的家伙' },
-            { Id: 5, Name: '韩梅梅', Age: 22, School: '光明小学', Remark: '在一起' },
-            { Id: 1, Name: '李先生', Age: 18, School: '光明小学', Remark: '三好学生' },
-            { Id: 2, Name: '小刚', Age: 20, School: '复兴中学', Remark: '优秀班干部' },
-            { Id: 3, Name: '吉姆格林', Age: 19, School: '光明小学', Remark: '吉姆做了汽车公司经理' },
-            { Id: 4, Name: '李雷', Age: 25, School: '复兴中学', Remark: '不老实的家伙' },
-            { Id: 5, Name: '韩梅梅', Age: 22, School: '光明小学', Remark: '在一起' },
-            { Id: 1, Name: '李先生', Age: 18, School: '光明小学', Remark: '三好学生' },
-            { Id: 2, Name: '小刚', Age: 20, School: '复兴中学', Remark: '优秀班干部' },
-            { Id: 3, Name: '吉姆格林', Age: 19, School: '光明小学', Remark: '吉姆做了汽车公司经理' },
-            { Id: 4, Name: '李雷', Age: 25, School: '复兴中学', Remark: '不老实的家伙' },
-            { Id: 5, Name: '韩梅梅', Age: 22, School: '光明小学', Remark: '在一起' },
+            { Name: '小明', Id: 1, School: '网易', Remark: '第一天上班' },
+            { Name: '小刚', Id: 2, School: '阿里巴巴', Remark: '第二天上班' },
+            { Name: '小强', Id: 3, School: '百度', Remark: '第三天上班' },
+            { Name: '李华', Id: 4, School: '网易', Remark: '第四天上班' },
+            { Name: '小红', Id: 5, School: '阿里巴巴', Remark: '第五天上班' },
+            { Name: '小强', Id: 6, School: '腾讯', Remark: '第六天上班' },
+            { Name: '小刚', Id: 7, School: '网易', Remark: '第七天上班' },
+            { Name: '小强', Id: 8, School: '阿里巴巴', Remark: '第八天上班' },
+            { Name: '李华', Id: 9, School: '百度', Remark: '第九天上班' },
+            { Name: '小强', Id: 10, School: '网易', Remark: '第十天上班' },
+            { Name: '小红', Id: 11, School: '阿里巴巴', Remark: '第十一天上班' },
+            { Name: '小刚', Id: 12, School: '腾讯', Remark: '第十二天上班' },
+            { Name: '小红', Id: 13, School: '网易', Remark: '第十三天上班' },
+            { Name: '李华', Id: 14, School: '百度', Remark: '第十四天上班' },
+            { Name: '小刚', Id: 15, School: '网易', Remark: '第十五天上班' },
+            { Name: '小红', Id: 16, School: '阿里巴巴', Remark: '第十六上班' },
+            { Name: '李华', Id: 17, School: '腾讯', Remark: '第十七天上班' },
+            { Name: '小红', Id: 18, School: '网易', Remark: '第十八天上班' },
+            { Name: '小刚', Id: 19, School: '阿里巴巴', Remark: '第十九天上班' },
+            { Name: '李华', Id: 20, School: '腾讯', Remark: '第二十天上班' },
             ],
             pagesize: 6,
             curpage:1,//当前页的页码
