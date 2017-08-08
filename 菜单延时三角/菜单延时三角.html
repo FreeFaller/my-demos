@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>菜单延时三角</title>
+</head>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	.main{position: relative;}
+	.menu1{width: 300px;margin:200px 0 0 100px; }
+	.menu1 li{list-style-type: none;background-color: #d8d8d8;}
+	.menu1 li p{line-height: 40px;padding: 0 20px}
+	.menu1 li:hover{background-color: #bdd5d6;}
+	.menu2 {width: 400px;position: absolute;left: 400px;top: -50px;}
+	.menu2 li{list-style-type: none;background-color: #7dccde;padding: 10px 20px;}
+</style>
+<script type="text/javascript" src="template.js"></script>
+<body>
+	<div class="main">
+		<div class="menu1" id="menu1">
+			<ul>
+				<li id="type1"><p>女装/内衣</p></li>
+				<li id="type2"><p>腕表/珠宝饰品/眼镜</p></li>
+				<li id="type3"><p>化妆品/个人护理</p></li>
+				<li id="type4"><p>图书音像</p></li>
+				<li id="type5"><p>零食/进口食品/茶酒</p></li>
+				<li id="type6"><p>生鲜水果</p></li>
+				<li id="type7"><p>家具建材</p></li>
+			</ul>	
+		</div>
+		<div id="content" class="menu2"></div> 
+	</div>
+
+	<script id="test" type="text/html"> 
+		<h1>{{title}}</h1> 
+		{{include 'list'}} 
+	</script> 
+	<script id="list" type="text/html">
+		<ul>
+			{{each list}} 
+				<li>{{$index+1}} - {{$value.name}}</li> 
+			{{/each}} 
+		</ul>
+	</script>
+</body>
+
+<script type="text/javascript">
+	var menu1 = document.getElementById('menu1'),
+	    activeRow = null, //一级菜单当前焦点行
+	    mouseLocs = [], //鼠标位置存储栈
+	    lastDelayLoc = null, //存储最近有延时的坐标
+	    timeoutId = null, //存储定时器
+	    options = {
+		rowSelector:"> li",
+		submenuSelector: "*",
+		submenuDirection:"right",
+		tolerance:75,
+		enter:function(){},      //进入一级菜单触发
+		exit:function(){},       //离开一级菜单触发
+		activate:function(){},   //一级菜单当前行被激活时触发
+		deactivate:function(){}, //一级菜单取消激活时触发
+		exitMenu:function(){}    //离开菜单时触发
+	};
+
+	var data1 = { 
+		 title: '类目1', 
+		 list: [{name:'当季流行'}, {name:'精选上装'},{ name:'浪漫裙装'}, {name:'特色女装'}, {name:'女士下装'}, {name:'家具服'},{name:'户外运动'}] 
+		}; 
+	var data2 = { 
+		 title: '类目2', 
+		 list: [{name:'黄金首饰'}, {name:'钻石彩宝'},{ name:'珍珠翡翠'}, {name:'潮流饰品'}, {name:'腕表'}, {name:'眼镜'}] 
+	}; 
+	var data3 = { 
+		 title: '类目3', 
+		 list: [{name:'护肤品'}, {name:'彩妆'},{ name:'男士护肤'}, {name:'肤质推选'}, {name:'美发护发'}, {name:'口腔护理'}, {name:'肌肤用品'}] 
+	}; 
+	var data4 = { 
+		 title: '类目4', 
+		 list: [{name:'儿童读物'}, {name:'畅销小说'},{ name:'文学文艺'}, {name:'社会生活'}, {name:'育儿百科'}, {name:'学习考试'}, {name:'教育教辅'}, {name:'经管励志'}] 
+	}; 
+	var data5 = { 
+		 title: '类目5', 
+		 list: [{name:'进口食品'}, {name:'休闲零食'},{ name:'酒类'}, {name:'茶叶'}, {name:'乳品冲饮'}, {name:'粮油速食'}, {name:'素食'}] 
+	}; 
+	var data6 = { 
+		 title: '类目6', 
+		 list: [{name:'新鲜蔬菜'}, {name:'冰淇淋'},{ name:'蛋类'}, {name:'肉类'}, {name:'海鲜水产'}, {name:'新鲜水果'}, {name:'精选干货'}] 
+	}; 
+	var data7 = { 
+		 title: '类目7', 
+		 list: [{name:'成套家具'}, {name:'客厅餐厅'},{ name:'卧室家具'}, {name:'书房儿童'}, {name:'厨房卫浴'}, {name:'照明灯饰'}] 
+	}; 
+	var html = template('test', data1); 
+	document.getElementById('content').innerHTML = html; 
+
+	//切换menu2
+	function change(data) {
+		var new_html = template('test',data);
+		document.getElementById('content').innerHTML = new_html; 
+	}
+
+	function changeMenu2(row){
+		var id = row.id;
+		switch (id) {
+			case  'type1':
+				change(data1);
+				break;
+			case  'type2':
+				change(data2);
+				break;
+			case  'type3':
+				change(data3);
+				break;
+			case  'type4':
+				change(data4);
+				break;
+			case  'type5':
+				change(data5);
+				break;
+			case  'type6':
+				change(data6);
+				break;
+			case  'type7':
+				change(data7);
+				break;
+		}
+	}
+	// 记录鼠标在文档中的移动坐标
+	function mouseMoveDocument(e){
+		mouseLocs.push({x:e.pageX,y:e.pageY});
+		if (mouseLocs.length > 3) {
+			mouseLocs.shift();
+		}
+	}
+	//鼠标离开的善后工作
+	function mouseLeaveMenu(){
+		if (timeoutId) {
+			//清除定时器
+			clearTimeout(timeoutId);
+		}
+		if (options.exitMenu(this)) {
+			if (activeRow) {
+				options.deactivate(activeRow); //触发取消激活事件
+			}
+			activeRow = null; //当前焦点行清空
+		}
+	}
+	//鼠标进入一级菜单新的行
+	function mouseenterRow(e){
+		//清理之前的定时器，因为possiblyActivate(this)中会设置定时器
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+		//触发鼠标进入事件
+		options.enter(this);
+		possiblyActivate(this);
+	}
+	//鼠标离开当前行
+	function mouseLeaveRow(){
+		//触发鼠标离开事件
+		options.exit(this);
+	}
+	//处于当前行时激活事件
+	function activate(row){
+		if (row == activeRow) {return} //当前行就是activeRow存的值
+		
+		//如果activeRow之前有值
+		if (activeRow) {
+			options.deactivate(activeRow);
+		}
+		//激活当前行，将当前行存储到activeRow变量中
+		changeMenu2(row);
+		options.activate(row);
+		activeRow = row;
+	}
+	function possiblyActivate(row){
+		var delay = activationDelay();
+
+		//有延时情况时，将匿名函数加入到执行队列，延迟delay毫秒后执行。
+		//而在匿名函数中调用possiblyActivate，会每隔一段时间调用一次，直到不延时
+		if (delay) {
+			timeoutId = setTimeout(function(){
+				possiblyActivate(row);
+			},delay);
+		}else{
+			//不延时，直接激活新的一行
+			activate(row);
+		}
+	}
+	function activationDelay(){
+		//当前没有被激活的行时，直接执行
+		if (!activeRow) {return 0;}
+
+		// var offset = menu1.offset(),
+		var offsetLeft = getElementViewLeft(menu1);
+		var offsetTop = getElementViewTop(menu1);
+		var upperLeft = {
+		    	x:offsetLeft,
+		    	y:offsetTop - options.tolerance
+		    },
+		    upperRight = {
+		    	x:offsetLeft + menu1.offsetWidth,
+		    	y:upperLeft.y
+		    },
+		    lowerLeft = {
+		    	x:offsetLeft,
+		    	y:offsetTop + menu1.offsetHeight + options.tolerance
+		    },
+		    lowerRight = {
+		    	x:offsetLeft + menu1.offsetWidth,
+		    	y:lowerLeft.y
+		    },
+		    loc = mouseLocs[mouseLocs.length - 1], //当前坐标
+		    prevLoc = mouseLocs[0];   //前一个坐标
+
+		    if (!loc) {return 0;}
+
+		    if (!prevLoc) {prevLoc = loc;}
+
+		    //移除菜单区域
+		    if (prevLoc.x < offsetLeft || prevLoc.x > lowerRight.x || 
+		    	prevLoc.y < offsetTop || prevLoc.y > lowerRight.y) {
+		    	return 0;
+		    }
+		    //鼠标在一级菜单相邻行缓慢切换时
+		    if (lastDelayLoc && loc.x == lastDelayLoc.x && loc.y == lastDelayLoc.y) {
+		    	return 0 ;
+		    }
+
+		    var decreasingCorner = upperRight, //右上角
+		        increasingCorner = lowerRight; //右下角
+
+		    var decreasingSlope = slope(loc,decreasingCorner),
+		        increasingSlope = slope(loc,increasingCorner),
+		        prevDecreasingSlope = slope(prevLoc,decreasingCorner),
+		        prevIncreasingSlope = slope(prevLoc,increasingCorner);
+		    if(decreasingSlope < prevDecreasingSlope && increasingSlope > prevIncreasingSlope){
+		    	lastDelayLoc = loc;   //记录延迟坐标
+		    	return 300;          //返回延迟毫秒数
+		    } 
+		    lastDelayLoc = null;
+		    return 0;
+	}
+	function slope(a,b){
+		return(b.y - a.y)/(b.x - a.x);
+	}
+
+	//获取元素相对左坐标
+	function getElementViewLeft(element){
+　　　　var actualLeft = element.offsetLeft;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualLeft += current.offsetLeft;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　if (document.compatMode == "BackCompat"){
+　　　　　　var elementScrollLeft=document.body.scrollLeft;
+　　　　} else {
+　　　　　　var elementScrollLeft=document.documentElement.scrollLeft; 
+　　　　}
+　　　　return actualLeft-elementScrollLeft;
+　　}
+	//获取元素相对上坐标
+　　function getElementViewTop(element){
+　　　　var actualTop = element.offsetTop;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualTop += current. offsetTop;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　 if (document.compatMode == "BackCompat"){
+　　　　　　var elementScrollTop=document.body.scrollTop;
+　　　　} else {
+　　　　　　var elementScrollTop=document.documentElement.scrollTop; 
+　　　　}
+　　　　return actualTop-elementScrollTop;
+　　}
+	//鼠标移动事件绑定
+	(function(){
+		document.addEventListener('mousemove',mouseMoveDocument,false);
+		menu1.addEventListener('mouseleave',mouseLeaveMenu);
+		var list = menu1.getElementsByTagName('li');
+		for (var i = 0; i < list.length; i++) {
+			list[i].addEventListener('mouseenter',mouseenterRow);
+			list[i].addEventListener('mouseleave',mouseLeaveRow);
+		}
+	})()
+</script>
+</html>
