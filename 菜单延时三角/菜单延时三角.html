@@ -186,29 +186,30 @@
 			activate(row);
 		}
 	}
+	var offsetLeft = getElementViewLeft(menu1);
+	var offsetTop = getElementViewTop(menu1);
+	var upperLeft = {
+	    	x:offsetLeft,
+	    	y:offsetTop - options.tolerance
+	    },
+	    upperRight = {
+	    	x:offsetLeft + menu1.offsetWidth,
+	    	y:upperLeft.y
+	    },
+	    lowerLeft = {
+	    	x:offsetLeft,
+	    	y:offsetTop + menu1.offsetHeight + options.tolerance
+	    },
+	    lowerRight = {
+	    	x:offsetLeft + menu1.offsetWidth,
+	    	y:lowerLeft.y
+	    }
 	function activationDelay(){
 		//当前没有被激活的行时，直接执行
 		if (!activeRow) {return 0;}
 
 		// var offset = menu1.offset(),
-		var offsetLeft = getElementViewLeft(menu1);
-		var offsetTop = getElementViewTop(menu1);
-		var upperLeft = {
-		    	x:offsetLeft,
-		    	y:offsetTop - options.tolerance
-		    },
-		    upperRight = {
-		    	x:offsetLeft + menu1.offsetWidth,
-		    	y:upperLeft.y
-		    },
-		    lowerLeft = {
-		    	x:offsetLeft,
-		    	y:offsetTop + menu1.offsetHeight + options.tolerance
-		    },
-		    lowerRight = {
-		    	x:offsetLeft + menu1.offsetWidth,
-		    	y:lowerLeft.y
-		    },
+		
 		    loc = mouseLocs[mouseLocs.length - 1], //当前坐标
 		    prevLoc = mouseLocs[0];   //前一个坐标
 
